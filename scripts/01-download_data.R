@@ -14,9 +14,7 @@ library(tidyverse)
 
 
 #### Download data ####
-red_light_camera_annual_charges <- search_packages("red_light_camera_annual_charges")
-red_light_camera_annual_charges
-
+#Download data from opendatatoronto
 raw_red_light_camera_data <- list_package_resources("https://open.toronto.ca/dataset/red-light-camera-annual-charges/") %>% 
   head(1) %>% 
   get_resource()
@@ -26,6 +24,6 @@ raw_red_light_camera_data
 #### Save data ####
 # [...UPDATE THIS...]
 # change the_raw_data to whatever name you assigned when you downloaded it.
-write_csv(the_raw_data, "inputs/data/raw_data.csv") 
+write_csv(raw_red_light_camera_data, 'inputs/data/raw_red_light_camera_data.csv') 
 
          

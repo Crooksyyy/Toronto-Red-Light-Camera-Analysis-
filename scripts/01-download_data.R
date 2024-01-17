@@ -22,8 +22,7 @@ raw_red_light_camera_data <- list_package_resources("https://open.toronto.ca/dat
 raw_red_light_camera_data
 
 #### Save data ####
-# [...UPDATE THIS...]
-# change the_raw_data to whatever name you assigned when you downloaded it.
+# Data is originally a .XLSX file, want to save as .csv
 write_csv(raw_red_light_camera_data, 'inputs/data/raw_red_light_camera_data.csv') 
 
          

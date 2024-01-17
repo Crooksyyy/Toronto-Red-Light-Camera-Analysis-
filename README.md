@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repo provides an analysis of Toronto's red light camera's and the number of tickets they issued between 2007-2022. This analysis focuses on being reproducible so please click the green "Code" button", then "Download ZIP". Move the downloaded folder to where you want to work on your own computer, and then modify it to suit or test my code.  
+This repo provides an analysis of Toronto's red light camera's and the number of tickets they issued between 2007-2022. This analysis focuses on being reproducible so please click the green "Code" button", then "Download ZIP". Move the downloaded folder to where you want to work on your own computer, and then modify it to suit or test my code.
 
 
 ## File Structure

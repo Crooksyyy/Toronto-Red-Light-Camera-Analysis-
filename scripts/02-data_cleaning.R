@@ -1,17 +1,29 @@
 #### Preamble ####
 # Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
-# License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Author: Gavin Crooks [...UPDATE THIS...]
+# Date: 17 January 2024 [...UPDATE THIS...]
+# Contact: gavin.crooks@mail.utoronto.ca [...UPDATE THIS...]
+# Pre-requisites: 01-downlaod_data.R
 
 #### Workspace setup ####
 library(tidyverse)
 
 #### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+raw_data <- read_csv("inputs/data/raw_red_light_camera_data.csv")
+
+
+raw_data <- raw_data[-1,]
+raw_data
+raw
+cleaned_data <- raw_data %>% replace(is.na(.), 0)
+cleaned_data
+
+cleaned_data <- cleaned_data %>% 
+  drop_na()
+
+cleaned_data 
+
+head(cleaned_data)
 
 cleaned_data <-
   raw_data |>

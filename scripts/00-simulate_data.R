@@ -21,8 +21,4 @@ sample_data = data.table(road = 1:100)
 sample_data = sample_data[, as.list(round(rnorm(13,100,10))), by = road]
 
 ###Save data###
-write_csv(sample_data, "outputs/data/simulated_data.csv")
-
-
-
-
+write_csv(sample_data, "outputs/Data/simulated_data.csv")

@@ -32,3 +32,4 @@ sapply(cleaned_data,class)
 
 #### Save data ####
 write_csv(cleaned_data, "outputs/Data/analysis_data.csv")
+

@@ -18,10 +18,6 @@ head(raw_data)
 cleaned_data <- as.data.frame(raw_data)
 # Replace NA with 0 
 cleaned_data[is.na(cleaned_data)] = 0 
-#Remove rows that have missing data if you prefer simpliar data set
-cleaned_data <- raw_data %>% 
-  drop_na()
-
 
 #Ensure all columns are in correct character class 
 sapply(cleaned_data, class)

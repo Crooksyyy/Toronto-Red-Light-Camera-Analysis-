@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Downloads and saves the data from Open data toronto
+# Purpose: Downloads and saves the data from Open data Toronto
 # Author: Gavin Crooks
 # Date: 17 January 2024 
 # Contact: gavin.crooks@mail.utoronto.ca 
@@ -22,7 +22,7 @@ raw_red_light_camera_data <- list_package_resources("https://open.toronto.ca/dat
 raw_red_light_camera_data
 
 #### Save data ####
-# Data is originally a .XLSX file, want to save as .csv
+#Save data as CSV, original data is XLSX file
 write_csv(raw_red_light_camera_data, 'inputs/data/raw_red_light_camera_data.csv') 
 
          

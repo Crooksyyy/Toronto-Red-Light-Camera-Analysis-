@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Simulates Toronto red light camera data
+# Purpose: Simulate Toronto red light camera data to be able to test the actual data set
 # Author: Gavin Crooks
 # Date: 22 January 2024
 # Contact: gavin.crooks@mail.utoronto.ca
@@ -20,7 +20,8 @@ sample_data = data.table(road = 1:100)
 # For each red light camera using any distribution pick the number of tickets issued by year
 sample_data = sample_data[, as.list(round(rnorm(13,100,10))), by = road]
 
-
+###Save data###
+write_csv(sample_data, "outputs/data/simulated_data.csv")
 
 
 

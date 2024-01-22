@@ -19,6 +19,10 @@ cleaned_data <- as.data.frame(raw_data)
 # Replace NA with 0 
 cleaned_data[is.na(cleaned_data)] = 0 
 
+#Remove remaining missing data 
+cleaned_data <- cleaned_data %>% 
+  drop_na()
+
 #Ensure all columns are in correct character class 
 sapply(cleaned_data, class)
 mutate(cleaned_data$"2021" <- as.numeric(cleaned_data$"2021"), warning = FALSE) 

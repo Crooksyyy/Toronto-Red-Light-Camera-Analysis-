@@ -14,9 +14,14 @@ library(dplyr)
 raw_data <- read_csv("inputs/data/raw_red_light_camera_data.csv", skip = 2)
 head(raw_data)
 
-#Remove rows that have missing data 
+# Create clean data as data frame
+cleaned_data <- as.data.frame(raw_data)
+# Replace NA with 0 
+cleaned_data[is.na(cleaned_data)] = 0 
+#Remove rows that have missing data if you prefer simpliar data set
 cleaned_data <- raw_data %>% 
   drop_na()
+
 
 #Ensure all columns are in correct character class 
 sapply(cleaned_data, class)

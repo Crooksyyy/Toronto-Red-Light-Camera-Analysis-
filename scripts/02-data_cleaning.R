@@ -19,8 +19,9 @@ cleaned_data <- as.data.frame(raw_data)
 # Replace NA with 0 
 cleaned_data[is.na(cleaned_data)] = 0 
 
+
 #Remove remaining missing data 
-cleaned_data <- cleaned_data %>% 
+cleaned_data <- cleaned_data |> 
   drop_na()
 
 #Ensure all columns are in correct character class 
@@ -31,4 +32,3 @@ sapply(cleaned_data,class)
 
 #### Save data ####
 write_csv(cleaned_data, "outputs/Data/analysis_data.csv")
-

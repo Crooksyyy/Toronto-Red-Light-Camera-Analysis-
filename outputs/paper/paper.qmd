@@ -16,26 +16,27 @@ bibliography: references.bib
 #| message: false
 library(tidyverse)
 library(knitr)
-
+cleaned_data <- read_csv("outputs/Data/analysis_data.csv")
 ```
 
 
 # Introduction
 
-In Toronto the the fine for entering an intersection during a red light, and being caught by a red light camera is 325CAD [@citecity]. This is a very large fine which most would like to avoid however, since 2007 the, red light cameras across the city have issued thousands of tickets [@ODT]. The total number of tickets issued in 2022 was 129900. This would imply the red light cameras generated over 42 million CAD worth of revenue for the city of Toronto. 
+In Toronto the the fine for entering an intersection during a red light, and being caught by a red light camera is 325CAD [@city]. This is a very large fine which most would like to avoid however, since 2007 the, red light cameras across the city have issued thousands of tickets [@ODT]. The total number of tickets issued in 2022 was 129900. This would imply the red light cameras generated over 42 million CAD worth of revenue for the city of Toronto. This may seem like a large amount however compared to the city of Toronto has an operating budget of 17 billion CAD[@budget]. 
 
 Red light cameras are not only designed to increase revenue for the city, however make the roads safer for pedestrians, cyclist and vehicle operators. 
 
 You can and should cross-reference sections and sub-sections. 
 
 The remainder of this paper is structured as follows. @sec-data....
-```{r}
 
-```
 
 
 # Data {#sec-data}
 
+```{r}
+kable(head(cleaned_data[1:5]), "simple", caption = "Sample of the data set, showing 6 different red light camera locations and the number of ticketes issued from 2007-2010")
+```
 
 
 # Discussion

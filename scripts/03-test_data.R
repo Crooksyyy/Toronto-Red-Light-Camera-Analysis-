@@ -2,14 +2,15 @@
 # Purpose: Tests our simulated data, then test the actual data set to ensure data cleaning is done and the data set is accurate.
 # Author: Gavin Crooks 
 # Date: 22 January 2024 
-# Contact: gavin.crooks@mail.utoronto.ca [...UPDATE THIS...]
+# Contact: gavin.crooks@mail.utoronto.ca 
 # Pre-requisites: 01-download_data and 02-data_cleaning
 
 
 
 #### Workspace setup ####
 library(tidyverse)
-# [...UPDATE THIS...]
+cleaned_data <- read_csv("outputs/Data/analysis_data.csv")
+
 
 #### Test data ####
 cleaned_data$"Charges Laid by Location & Year"|>

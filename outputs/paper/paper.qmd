@@ -1,13 +1,14 @@
 ---
-title: "Analysis of Toronto's Red Light Cameras"
+title: Analysis of Toronto's Red Light Cameras
 author: Gavin Crooks
 date: today
 date-format: long
-abstract: "Red light Camera's serve a number of uses for the municple governemnt of Toronto.Firstly, they police the roads, creating a safer city. Secondly, they generate revenue for the city. In this paper I analyze the data red light camera data provided by opendatatoronto to determine if red light cameras are effective at either of the reasons listed above."
+abstract: "Red light Cameras serve a number of uses for the municple governemnt of Toronto.Firstly, they police the roads, creating a safer city. Secondly, they generate revenue for the city. In this paper I analyze the red light camera data provided by opendatatoronto to determine the trends of red light cameras. In this paper I use tables and graphs to determine these trends and qualify them"
 format: pdf
 number-sections: true
 bibliography: references.bib 
 ---
+
 \newpage
 
 ```{r}
@@ -16,26 +17,29 @@ bibliography: references.bib
 #| message: false
 library(tidyverse)
 library(knitr)
-cleaned_data <- read_csv("outputs/Data/analysis_data.csv")
+#cleaned_data <- read_csv("outputs/Data/analysis_data.csv")
 ```
 
 
 # Introduction
 
-In Toronto the the fine for entering an intersection during a red light, and being caught by a red light camera is 325CAD [@city]. This is a very large fine which most would like to avoid however, since 2007 the, red light cameras across the city have issued thousands of tickets [@ODT]. The total number of tickets issued in 2022 was 129900. This would imply the red light cameras generated over 42 million CAD worth of revenue for the city of Toronto. This may seem like a large amount however compared to the city of Toronto has an operating budget of 17 billion CAD[@budget]. 
+In Toronto the the fine for entering an intersection during a red light, and being caught by a red light camera is 325CAD [@city]. This is a very large fine which most would like to avoid however, since 2007, the red light cameras across the city have issued thousands of tickets [@ODT]. The total number of tickets issued in 2022 was 129900. This would imply the red light cameras generated over 42 million CAD worth of revenue for the city of Toronto. This may seem like a large amount however compared to the city of Toronto operating budget of 17 billion CAD[@budget].The red light camera fines relative to the cities budget are not generating a substantial amount of revenue.  
 
-Red light cameras are not only designed to increase revenue for the city, however make the roads safer for pedestrians, cyclist and vehicle operators. 
+Red light cameras are not only designed to increase revenue for the city, however make the roads safe for pedestrians, cyclist and vehicle operators. This is very difficult to measure as you would need to analyze the data for accidents at a given intersection before and after the red light camera was installed. This would also have to be applied to a radius around the intersection, not just the intersection itself. This analysis requires an extensive data set, likely combining multiple data sets with methods like multi-level postratification methods. 
+
+The goal of this paper is to focus on neither goal of red light cameras but analyze the trands that occur at a red light camera. I look to answer questions such as why is the number of tickets in a given year more or less than the years prior. 
 
 You can and should cross-reference sections and sub-sections. 
 
-The remainder of this paper is structured as follows. @sec-data....
+The remainder of this paper is structured as follows. @sec-data and 
 
 
 
 # Data {#sec-data}
 
 ```{r}
-kable(head(cleaned_data[1:5]), "simple", caption = "Sample of the data set, showing 6 different red light camera locations and the number of ticketes issued from 2007-2010")
+
+#kable(head(cleaned_data[1:5]), "simple", caption = "Sample of the data set, showing 6 different red light camera locations and the number of ticketes issued from 2007-2010")
 ```
 
 

@@ -25,11 +25,10 @@ library(knitr)
 
 In Toronto the the fine for entering an intersection during a red light, and being caught by a red light camera is 325CAD [@city]. This is a very large fine which most would like to avoid however, since 2007, the red light cameras across the city have issued thousands of tickets [@ODT]. The total number of tickets issued in 2022 was 129900. This would imply the red light cameras generated over 42 million CAD worth of revenue for the city of Toronto. This may seem like a large amount however compared to the city of Toronto operating budget of 17 billion CAD[@budget].The red light camera fines relative to the cities budget are not generating a substantial amount of revenue.  
 
-Red light cameras are not only designed to increase revenue for the city, however make the roads safe for pedestrians, cyclist and vehicle operators. This is very difficult to measure as you would need to analyze the data for accidents at a given intersection before and after the red light camera was installed. This would also have to be applied to a radius around the intersection, not just the intersection itself. This analysis requires an extensive data set, likely combining multiple data sets with methods like multi-level postratification methods. 
+Red light cameras are not only designed to increase revenue for the city, however make the roads safe for pedestrians, cyclist and vehicle operators. This is very difficult to measure as you would need to analyze the data for accidents at a given intersection before and after the red light camera was installed. This would also have to be applied to a radius around the intersection, not just the intersection itself. This analysis requires an extensive data set, likely combining multiple data sets with methods like multi-level post stratification methods. 
 
-The goal of this paper is to focus on neither goal of red light cameras but analyze the trands that occur at a red light camera. I look to answer questions such as why is the number of tickets in a given year more or less than the years prior. 
+The goal of this paper is to focus on neither goal of red light cameras but analyze the trends that occur at a red light camera or red light cameras in general. I look to answer questions such as why is the number of tickets in a given year more or less than the years prior. 
 
-You can and should cross-reference sections and sub-sections. 
 
 The remainder of this paper is structured as follows. @sec-data and 
 
@@ -41,8 +40,21 @@ The remainder of this paper is structured as follows. @sec-data and
 
 #kable(head(cleaned_data[1:5]), "simple", caption = "Sample of the data set, showing 6 different red light camera locations and the number of ticketes issued from 2007-2010")
 ```
-
-
+```{r}
+# figure out how to make a table of each years mean number of tickets
+x <- mean(cleaned_data$'2007')
+x
+y <- mean(cleaned_data$'2014')
+y
+z <- mean(cleaned_data$'2022')
+means <-c(x,y,z)
+mean(group_by())
+data_graphs
+```
+```{r}
+ggplot(data_graphs, aes(x=year))
+       geom_bar()
+```
 # Discussion
 
 ## First discussion point {#sec-first-point}

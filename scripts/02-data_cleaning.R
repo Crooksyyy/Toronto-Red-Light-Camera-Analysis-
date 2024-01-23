@@ -33,3 +33,8 @@ sapply(cleaned_data,class)
 #### Save data ####
 write_csv(cleaned_data, "outputs/Data/analysis_data.csv")
 
+###Remove intersection column ###
+#Removing intersection column allows for charts and tables to be made more easily
+data_graphs <- subset(cleaned_data,select = -c(1))
+data_graphs
+write_csv(data_graphs, "outputs/Data/graph_data.csv")

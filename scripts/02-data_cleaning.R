@@ -18,23 +18,28 @@ head(raw_data)
 cleaned_data <- as.data.frame(raw_data)
 # Replace NA with 0 
 cleaned_data[is.na(cleaned_data)] = 0 
+cleaned_data[is.na(cleaned_data)] = 0 
 
-
-#Remove remaining missing data 
-cleaned_data <- cleaned_data |> 
-  drop_na()
 
 #Ensure all columns are in correct character class 
 sapply(cleaned_data, class)
 mutate(cleaned_data$"2021" <- as.numeric(cleaned_data$"2021"), warning = FALSE) 
 sapply(cleaned_data,class)
 
+#Remove remaining missing data caused by above function 
+cleaned_data <- cleaned_data |> 
+  drop_na()
+
+#Rename columns to better name
+names(cleaned_data)[names(cleaned_data) == 'Charges Laid by Location & Year'] <- 'Location'
 
 #### Save data ####
 write_csv(cleaned_data, "outputs/Data/analysis_data.csv")
+
 
 ###Remove intersection column ###
 #Removing intersection column allows for charts and tables to be made more easily
 data_graphs <- subset(cleaned_data,select = -c(1))
 data_graphs
 write_csv(data_graphs, "outputs/Data/graph_data.csv")
+

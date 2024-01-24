@@ -3,21 +3,22 @@ title: Analysis of Toronto's Red Light Cameras
 author: Gavin Crooks
 date: today
 date-format: long
-abstract: "Red light Cameras serve a number of uses for the municple governemnt of Toronto.Firstly, they police the roads, creating a safer city. Secondly, they generate revenue for the city. In this paper I analyze the red light camera data provided by opendatatoronto to determine the trends of red light cameras. In this paper I use tables and graphs to determine these trends and qualify them"
+abstract: "Red light Cameras serve a number of uses for the municple governemnt of Toronto.Firstly, they police the roads, creating a safer city. Secondly, they generate revenue for the city. In this paper I analyze the red light camera data provided by opendatatoronto to determine the trends of red light cameras. In this paper I use tables and graphs to determine these trends and describe them."
 format: pdf
 number-sections: true
 bibliography: references.bib 
 ---
 
-\newpage
 
 ```{r}
 #| include: false
 #| warning: false
 #| message: false
 library(tidyverse)
+library(here)
 library(knitr)
-#cleaned_data <- read_csv("outputs/Data/analysis_data.csv")
+analysis_data <- read_csv(here::here("outputs/Data/analysis_data.csv"))
+analysis_data
 ```
 
 
@@ -30,32 +31,30 @@ Red light cameras are not only designed to increase revenue for the city, howeve
 The goal of this paper is to focus on neither goal of red light cameras but analyze the trends that occur at a red light camera or red light cameras in general. I look to answer questions such as why is the number of tickets in a given year more or less than the years prior. 
 
 
-The remainder of this paper is structured as follows. @sec-data and 
-
-
+The remainder of this paper is structured as follows. @sec-data and @sec-disc, both with subsections with in. @sec-data focuses on the strength and weaknesses of the raw data and the cleaned data. @sec-disc focuses on what further analysis can be done to understand the effectiveness of red light cameras in the city of Toronto. 
 
 # Data {#sec-data}
 
 ```{r}
-
-#kable(head(cleaned_data[1:5]), "simple", caption = "Sample of the data set, showing 6 different red light camera locations and the number of ticketes issued from 2007-2010")
+#| include: false
+#| warning: false
+#| message: false
+kable(head(analysis_data[1:5]), "simple", caption = "Sample of the data set, showing 6 different red light camera locations and the number of ticketes issued from 2007-2010")
 ```
 ```{r}
 # figure out how to make a table of each years mean number of tickets
-x <- mean(cleaned_data$'2007')
-x
-y <- mean(cleaned_data$'2014')
-y
-z <- mean(cleaned_data$'2022')
-means <-c(x,y,z)
-mean(group_by())
-data_graphs
+#| include: false
+#| warning: false
+#| message: false
+barplot(colSums(analysis_data[,2:17]))
+
 ```
 ```{r}
-ggplot(data_graphs, aes(x=year))
-       geom_bar()
+#ggplot(data_graphs, aes(x=year))
+#       geom_bar()
 ```
-# Discussion
+# Discussion {#sec-disc}
+
 
 ## First discussion point {#sec-first-point}
 

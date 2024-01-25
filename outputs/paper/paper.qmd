@@ -1,12 +1,16 @@
 ---
-title: Analysis of Toronto's Red Light Cameras
+title: "Analysis of Toronto's Red Light Cameras"
 author: Gavin Crooks
 date: today
 date-format: long
-abstract: "Red light Cameras serve a number of uses for the municple governemnt of Toronto.Firstly, they police the roads, creating a safer city. Secondly, they generate revenue for the city. In this paper I analyze the red light camera data provided by opendatatoronto to determine the trends of red light cameras. In this paper I use tables and graphs to determine these trends and describe them."
+thanks: "Code and data are available at: https://github.com/Crooksyyy/Toronto-Red-Light-Camera-Analysis-."
+abstract: "Red light cameras serve a number of purposes for the Municple Governemnt of Toronto. Firstly, they police the roads, creating a safer community for all Torontonians and secondly, they generate revenue for the city. To complete the analysis of the red light camera data provided by opendatatoronto, in this report I use tables and graphs to visualize the information. I also use the data to asist in the analysis of how the COVID-19 pandemic has impacted red light camera tickets."
 format: pdf
 number-sections: true
+toc: true
 bibliography: references.bib 
+nocite: |
+  @*
 ---
 
 
@@ -18,55 +22,119 @@ library(tidyverse)
 library(here)
 library(knitr)
 analysis_data <- read_csv(here::here("outputs/Data/analysis_data.csv"))
-analysis_data
+graph_data <- read_csv(here::here("outputs/Data/graph_data.csv"))
+###Removes scientific notation for embedded code
+###This code is from stack over flow
+###https://stackoverflow.com/questions/9397664/force-r-not-to-use-exponential-notation-e-g-e10
+options(scipen = 999)
 ```
 
 
 # Introduction
 
-In Toronto the the fine for entering an intersection during a red light, and being caught by a red light camera is 325CAD [@city]. This is a very large fine which most would like to avoid however, since 2007, the red light cameras across the city have issued thousands of tickets [@ODT]. The total number of tickets issued in 2022 was 129900. This would imply the red light cameras generated over 42 million CAD worth of revenue for the city of Toronto. This may seem like a large amount however compared to the city of Toronto operating budget of 17 billion CAD[@budget].The red light camera fines relative to the cities budget are not generating a substantial amount of revenue.  
+In Toronto the fine for entering an intersection during a red light, and being caught by a red light camera is 325CAD [@city]. This is a very large fine, which most would like to avoid however, since 2007, the red light cameras across the city have issued thousands of tickets [@ODT]. The total number of tickets issued in 2022 was `{r} sum(analysis_data$"2022")`. This would imply the red light cameras generated over 42 million CAD worth of revenue for the city of Toronto. This may seem like a large amount however, compared to the city of Toronto operating budget of 17 billion CAD [@budget].The red light camera fines relative to the cities budget are not generating a substantial amount of revenue. 
 
-Red light cameras are not only designed to increase revenue for the city, however make the roads safe for pedestrians, cyclist and vehicle operators. This is very difficult to measure as you would need to analyze the data for accidents at a given intersection before and after the red light camera was installed. This would also have to be applied to a radius around the intersection, not just the intersection itself. This analysis requires an extensive data set, likely combining multiple data sets with methods like multi-level post stratification methods. 
+Red light cameras are not only designed to increase revenue for the city they serve as additionally, they are intended to aid in making the roads safe for pedestrians, cyclist and vehicle operators. This is very difficult to measure as you would need to analyze the data for accidents at a given intersection before and after the red light camera was installed. This would also have to be applied to a radius around the intersection, not just the intersection itself. This analysis requires an extensive data set, likely combining multiple data sets with methods like multi-level post stratification methods. 
 
-The goal of this paper is to focus on neither goal of red light cameras but analyze the trends that occur at a red light camera or red light cameras in general. I look to answer questions such as why is the number of tickets in a given year more or less than the years prior. 
+The goal of this paper is to focus on neither goal of red light cameras but analyze the trends that occur at a red light camera intersection or red light cameras in general. The reason for this is the city of Toronto continues to install more red light cameras through out the city. A recent CBC news article discusses both red light cameras and speed cameras [@CBC]. I look to answer questions such as why is the number of tickets in a given year more or less than the years prior. 
 
-
-The remainder of this paper is structured as follows. @sec-data and @sec-disc, both with subsections with in. @sec-data focuses on the strength and weaknesses of the raw data and the cleaned data. @sec-disc focuses on what further analysis can be done to understand the effectiveness of red light cameras in the city of Toronto. 
+The remainder of this paper is structured as follows. @sec-data and @sec-disc, both with subsections within. @sec-data focuses on the strength and weaknesses of the raw data and the cleaned data. @sec-disc focuses on what further analysis can be done to understand the effectiveness of red light cameras in the city of Toronto. 
 
 # Data {#sec-data}
+## Data Introduction {#sec-dataintro}
+
+
+The data in this analysis is openly accessible from the @ODT, a @citeR package which allows data sets from the city of Toronto to be easily used in R. The data used in this paper is extremely simple. The data consists of a list of intersections that have had a red light camera since 2007, when the city began installing them, to 2022. For each intersection it lists the number of tickets each camera has issued. This means it is a small to moderately sized data set as it has a row for each year between 2007-2022 and a row for each intersection with a red light camera. @tbl-sample displays a sample of the data set to illustrate the simplicity of the data. Unfortunately, the data has not been updated since the end off 2022 [@data]. The data is supposed to be updated semi-annually but was last updated in March of 2023, with the complete 2022 data [@data]. 
 
 ```{r}
-#| include: false
+#| label: tbl-sample
+#| tbl-cap: "Sample of the data set, 6 different red light camera locations and the number of ticketes issued each year from 2007-2010"
+#| echo: false
 #| warning: false
 #| message: false
-kable(head(analysis_data[1:5]), "simple", caption = "Sample of the data set, showing 6 different red light camera locations and the number of ticketes issued from 2007-2010")
+
+kable(head(analysis_data[1:5]), "simple")
 ```
 ```{r}
-# figure out how to make a table of each years mean number of tickets
-#| include: false
+#| label: fig-figure1
+#| fig-cap: "The total number of red light camera tickets issued in Toronto from 2007-2022"
 #| warning: false
 #| message: false
-barplot(colSums(analysis_data[,2:17]))
+#| echo: false
+barplot(colSums(analysis_data[,2:17]),
+        xlab = "Years 2007-2022",
+        ylab = "Number of Tickets Issued",
+        style = "minimal")
+      
+```
+
+Obviously, not all 300 red light cameras were installed in 2007, only `{r} sum(graph_data$year_2007 > 0, na.rm = TRUE)` red light cameras we installed in 2007. This means for the years the cameras were not yet installed it should show it issued 0 tickets. In the raw data this was true for a number of lights, however not all. This proved to be a challenge when completing statistics or graphs of the data, requiring N/A values to be assigned a value of 0. An example of a red light camera issuing 0 tickets can be seen in @tbl-sample. Albion Rd. and Finch Ave. issued 0 tickets in 2007 and 2008 because it was not yet installed. In @fig-figure1 the distribution of tickets issued since the cameras were installed in 2007. 
+
+The number of tickets overall trend is an increase year over year. A handful of years issued less tickets than the previous. An obvious example is in 2020 we see a decrease compared to both the previous years, a result of the COVID-19 pandemic, resulting in multiple lockdowns during the year. To truly understand how many tickets are issued each year, the average number of tickets per year is in @tbl-mean. 
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| include: false
+# Could not use summarise function to complete these means
+# errors occurred, would love recommendation on how to streamline this chunk of code
+# Calculating mean excluding values of 0
+mean_2007 <- mean(graph_data$year_2007[graph_data$year_2007>0])
+mean_2008 <- mean(graph_data$year_2008[graph_data$year_2008>0])
+mean_2009 <- mean(graph_data$year_2009[graph_data$year_2009>0])
+mean_2010 <- mean(graph_data$year_2010[graph_data$year_2010>0])
+mean_2011 <- mean(graph_data$year_2011[graph_data$year_2011>0])
+mean_2012 <- mean(graph_data$year_2012[graph_data$year_2012>0])
+mean_2013 <- mean(graph_data$year_2013[graph_data$year_2013>0])
+mean_2014 <- mean(graph_data$year_2014[graph_data$year_2014>0])
+mean_2015 <- mean(graph_data$year_2015[graph_data$year_2015>0])
+mean_2016 <- mean(graph_data$year_2016[graph_data$year_2016>0])
+mean_2017 <- mean(graph_data$year_2017[graph_data$year_2017>0])
+mean_2018 <- mean(graph_data$year_2018[graph_data$year_2018>0])
+mean_2019 <- mean(graph_data$year_2019[graph_data$year_2019>0])
+mean_2020 <- mean(graph_data$year_2020[graph_data$year_2020>0])
+mean_2021 <- mean(graph_data$year_2021[graph_data$year_2021>0])
+mean_2022 <- mean(graph_data$year_2022[graph_data$year_2022>0])
+
+#table of means
+tib1 <- tibble(mean_2007,mean_2008,mean_2009, mean_2010, mean_2011, mean_2012, mean_2013, mean_2014,
+       mean_2015, mean_2016, mean_2017, mean_2018, mean_2019, mean_2020, mean_2021, mean_2022)
+#transpose table
+#transpose table code from stack over flow
+#https://stackoverflow.com/questions/70533324/how-to-rotate-transpose-a-tibble-with-list-columns
+tib2 <- tib1 %>% 
+  pivot_longer(everything()) 
 
 ```
+
+## Data Insights {sec-datainsights}
+
 ```{r}
-#ggplot(data_graphs, aes(x=year))
-#       geom_bar()
+#| label: tbl-mean
+#| tbl-cap: "Mean number of tickets issued by red light cameras in Toronto by year from 2007-2022"
+#| echo: false
+#| warning: false
+#| message: false
+# Formatting table
+kable(tib2, format = "simple", digits = 0, col.names = c('Year','Mean'), align = c('c','c'))
 ```
+
+
+This table provides an interesting insight. On average more tickets were issued in 2018 than 2022, which means @fig-figure1 may be misleading as it clearly shows more tickets being issued in 2022. This is a result of the total number of cameras installed in each year. In 2018 only `{r} sum(graph_data$year_2018 > 0, na.rm = TRUE)` cameras were installed, however in 2022, `{r} sum(graph_data$year_2022 > 0, na.rm = TRUE)` cameras were installed. This means the increase in tickets is not a result of the each camera actually issuing more tickets, but more cameras in total issuing tickets. Again a likely cause of the cameras not issuing as many tickets in 2022 as 2018 could be the COVID-19 pandemic. During the year 2022, the economy and society were just returning to their 'normal' or, pre pandemic times @sec-dataintro. In order to determine this the data for 2023 would be required as it was the first full year post pandemic. However, mentioned previously the data is currently only available for 2022.
+
+
+
 # Discussion {#sec-disc}
+## Data Positives {#sec-first-point}
+There were multiple benefits to this data set. Most obviously was the simplicity of the data, it was originally in an excel file(XSLS). Opening this file directly from the @data website was extremely insightful. All the variables were extremely simple and easy to understand. The topic in general is also extremely simple making analyzing the topic very straight forward. 
 
+## Data Drawbacks {#sec-second-point}
+Although the data is simple and easily understandable, it had many drawbacks. Firstly, there was a number of different formats within the data. Specifically, there were a number of different ways the data represented 0 tickets issued such as 0, "N/A" or N/a. This increased the complexity in cleaning the data as having 0 tickets issued is very different from missing data all together. Another drawback was the variable names. All the year variables were not named, when cleaning the data the names were created as the given year. This created a number of problems when trying to analyze the data as a number of functions were difficult to use. 
 
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
+## Next steps {#sec-nextsteps}
+There are multiple ways to continue this analysis. Firstly, obtaining the 2023 data to more accurately determine how the pandemic impacted the number of tickets issued. Another way to continue analyzing red light cameras is to measure how effective red light cameras are at preventing accidents. That is not possible with just this data set. This would require a number of other data sets including geographical data of accidents around red light cameras before and after a red light camera was installed. Then, complete analysis of the number of accidents before and after the red light camera was installed. This type of analysis is outside the scope of this paper but an interesting topic for future studies.  
 
 \newpage
 
@@ -74,14 +142,16 @@ Weaknesses and next steps should also be included.
 
 # Appendix {-}
 
+## Data Cleaning
+The first step in cleaning the data was completed when opening the file by removing the formatting issues. These issues were caused by the XSLS file as the column names were filled as N/A. To do this I simply removed the first row when opening the file for cleaning as the next row actually had the titles. The next step was setting any missing value equal to zero. Another formatting mistake is that the column for year 2017 was a character class not numeric. This had to be changed as well. This created a single missing value that was removed from the data. Lastly, more appropriate names for the column were added.
 
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-
+## Data 
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+glimpse(graph_data)
+```
 \newpage
 
 

@@ -7,7 +7,6 @@
 
 #### Workspace setup ####
 library(tidyverse)
-library(dplyr)
 
 #### Clean data ####
 #Open raw data - skip = 2 because it removes inaccurate labels
@@ -36,10 +35,12 @@ names(cleaned_data)[names(cleaned_data) == 'Charges Laid by Location & Year'] <-
 #### Save data ####
 write_csv(cleaned_data, "outputs/Data/analysis_data.csv")
 
+#Renaming columns to not just a number to making working with easier
 
-###Remove intersection column ###
-#Removing intersection column allows for charts and tables to be made more easily
-data_graphs <- subset(cleaned_data,select = -c(1))
-data_graphs
-write_csv(data_graphs, "outputs/Data/graph_data.csv")
+new_names <- c("Location", "year_2007","year_2008", "year_2009", "year_2010", "year_2011", "year_2012", "year_2013",
+               "year_2014", "year_2015", "year_2016", "year_2017","year_2018", "year_2019", "year_2020", "year_2021",
+               "year_2022")
+graph_data <- cleaned_data %>% set_names(new_names)
+
+write_csv(graph_data, "outputs/Data/graph_data.csv")
 

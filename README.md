@@ -16,4 +16,4 @@ The repo is structured as:
 
 ## Large Language Models(LLM's)
 
-In today's world, it is important to note if and how LLM's were used to produce this repo. There was no use of any LLM to produce this repo or any of the files it contains. All work in this repo is produced by myself or appropiately cited.  
+In today's world, it is important to note if and how LLM's were used to produce this repo. There was no use of any LLM to produce this repo or any of the files it contains. All work in this repo is produced by myself or appropriately cited.  
